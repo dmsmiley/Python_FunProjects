@@ -13,3 +13,4 @@ for i in range(99, 0, -1):
         print(f"\n\n{i} bottle of beer on the wall. {i} bottle of beer.")
         print("Take one down, pass it around...")
         print("No more bottles of beer on the wall.")
+input("Press ENTER to exit: ")
