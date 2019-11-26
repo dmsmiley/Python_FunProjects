@@ -11,29 +11,12 @@
 
 import random as rd
 import time
+import sys
 
 
-def player_win():
-  print("You won!!!!")
-  again = input("Would you like to play again? ")
-  if again == "y":
-    intro()
-  else:
-    print("Goodbye!")
 
-def player_lose():
-  print("Better luck next time")
-  again = input("Would you like to play again? ")
-  if again == "y":
-    intro()
-  else:
-    print("Goodbye!")
-
-
-villain_names = ['Task Rabbit', 'Omega', 'Patch Galactic', 'Misfit', 'Night Caller', 'Atomic', 'Patches', 'Voodoo', 'Aberation', 'Transonic', 'Nocturne', 'Overkill', 'Crossfire', 'Red Wolf', 'Dark Horse', 'Pyro', 'Slicer']
-
-
-def main():
+#standard introduction
+def intro():
   print("\nWelcome to the Ultimate Warrior Battle Arena!\n")
   time.sleep(3.5)
   print("This turn based game will have you fighting the deadliest, most ruthless, and fiercest opponents in the galaxy!\n")
@@ -46,15 +29,21 @@ def main():
   time.sleep(5.5)
   print("The first is the quick and accurate Fiery Jab which will deal a moderate amount of damage.\n")
   time.sleep(5.5)
-  print("The second is the strong and less accurate Preeminent Throat Punch of Almost Certain Death, which when it hits will deal a crazy amount of damage.\n")
+  print("The second is the strong and less accurate Preeminent Throat Punch of Near Certain Death, which when it hits will deal a crazy amount of damage.\n")
   time.sleep(9)
   print("Finally there is a move to Heal.\n")
   time.sleep(2.5)
   print("Let's get down to business.\n")
   time.sleep(2)
+
+
+#list of villain names for the opponent list  
+villain_names = ['Task Rabbit', 'Omega', 'Patch Galactic', 'Misfit', 'Night Caller', 'Atomic', 'Patches', 'Voodoo', 'Aberation', 'Transonic', 'Nocturne', 'Overkill', 'Crossfire', 'Red Wolf', 'Dark Horse', 'Pyro', 'Slicer']
+
+  
+def main():
   opponent = rd.choice(villain_names)
-  name = input("What is your name? ")
-  print(f"Welcome, {name}!")
+  print(f"\nWelcome, {name}!")
   time.sleep(2) 
   print(f"Your opponent today is {opponent}.\n")
   time.sleep(4)
@@ -72,8 +61,8 @@ def main():
   game = True
 
   while game:
-    player_health = 100
-    opp_health = 100
+    player_health = 50
+    opp_health = 50
 
     while (player_health > 0 or opp_health > 0):
       while player_turn:
@@ -94,13 +83,15 @@ def main():
             print(f"\nYou dealt {damage1}HP of damage")
             player_turn = False
             if (opp_health <= 0):
+              print(f"\n{opponent}'s HP is 0!")
+              time.sleep(2)
               player_win()
               break
             else:
               break
         if move == 2:
           chance2 = rd.randint(1,100)
-          if chance2 > 40:
+          if chance2 > 55:
             print("\nThe attack has missed")
             player_turn = False
             break
@@ -110,13 +101,15 @@ def main():
             print(f"\nYou dealt {damage2}HP of damage")
             player_turn = False
             if (opp_health <= 0):
+              print(f"\n{opponent}'s HP is 0!")
+              time.sleep(2)
               player_win()
               break
             else:
               break
         if move == 3:
           chance3 = rd.randint(1,100)
-          if chance3 > 50:
+          if chance3 > 70:
             print("\nUnable to heal")
             player_turn = False
             break
@@ -135,8 +128,16 @@ def main():
         print(f"{opponent}'s HP is {opp_health}")
         print(f"\n{opponent} will decide his move.")
         time.sleep(2)
-        move = rd.randint(1,3)
+        
+        crit_health_moves = [1,2,3,3]
+        
+        if (opp_health < 35):
+          move = rd.choice(crit_health_moves)
+        else:
+          move = rd.randint(1,3)
         if move == 1:
+          print(f"\n{opponent} has thrown a Fiery Jab!")
+          time.sleep(2)
           chance1 = rd.randint(1,100)
           if chance1 > 80:
             print("\nThe attack has missed")
@@ -146,13 +147,17 @@ def main():
             player_health -= damage1
             print(f"\n{opponent} dealt {damage1}HP of damage")
             if (player_health <= 0):
+              print(f"\n{name}'s HP is 0!")
+              time.sleep(2)
               player_lose()
               break
             else:
               player_turn = True
         if move == 2:
+          print(f"\n{opponent} has thrown the Preeminent Throat Punch of Near Certain Death!")
           chance2 = rd.randint(1,100)
-          if chance2 > 40:
+          time.sleep(2)
+          if chance2 > 55:
             print("\nThe attack has missed")
             player_turn = True
           else:
@@ -160,14 +165,16 @@ def main():
             player_health -= damage2
             print(f"\n{opponent} dealt {damage2}HP of damage")
             if (player_health <= 0):
+              print(f"\n{name}'s HP is 0!")
+              time.sleep(2)
               player_lose()
               break
             else:
               player_turn = True
         if move == 3:
           chance3 = rd.randint(1,100)
-          if chance3 > 50:
-            print(f"\n{opponent} unable to heal")
+          if chance3 > 70:
+            print(f"\n{opponent} was unable to heal")
             player_turn = True
           else:
             heal = rd.randint(25,40)
@@ -175,5 +182,31 @@ def main():
             print(f"\n{opponent} healed by {heal}HP")
             player_turn = True
 
-main()
 
+def player_win():
+  print("\nYou won!!!!")
+  again = input("\nWould you like to play again? ")
+  if again == "y":
+    main()
+  else:
+    print("Goodbye!")
+    time.sleep(2)
+    sys.exit()
+
+def player_lose():
+  print("\nYou have been dealt the killing blow")
+  time.sleep(2)
+  print("\nBetter luck next time")
+  again = input("\nWould you like to play again? ")
+  if again == "y":
+    main()
+  else:
+    print("\nGoodbye!")
+    time.sleep(2)
+    sys.exit()
+
+
+
+name = input("\nWhat is your name? ")
+
+main()
