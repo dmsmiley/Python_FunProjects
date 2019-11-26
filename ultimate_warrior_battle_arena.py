@@ -61,8 +61,8 @@ def main():
   game = True
 
   while game:
-    player_health = 50
-    opp_health = 50
+    player_health = 100
+    opp_health = 100
 
     while (player_health > 0 or opp_health > 0):
       while player_turn:
