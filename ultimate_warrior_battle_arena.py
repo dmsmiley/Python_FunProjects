@@ -14,8 +14,9 @@ import time
 import sys
 
 
+villain_names = ['Task Rabbit', 'Omega', 'Patch Galactic', 'Misfit', 'Night Caller', 'Atomic', 'Patches', 'Voodoo', 'Aberation', 'Transonic', 'Nocturne', 'Overkill', 'Crossfire', 'Red Wolf', 'Dark Horse', 'Pyro', 'Slicer']
 
-#standard introduction
+
 def intro():
   print("\nWelcome to the Ultimate Warrior Battle Arena!\n")
   time.sleep(3.5)
@@ -35,12 +36,8 @@ def intro():
   time.sleep(2.5)
   print("Let's get down to business.\n")
   time.sleep(2)
-
-
-#list of villain names for the opponent list  
-villain_names = ['Task Rabbit', 'Omega', 'Patch Galactic', 'Misfit', 'Night Caller', 'Atomic', 'Patches', 'Voodoo', 'Aberation', 'Transonic', 'Nocturne', 'Overkill', 'Crossfire', 'Red Wolf', 'Dark Horse', 'Pyro', 'Slicer']
-
   
+
 def main():
   opponent = rd.choice(villain_names)
   print(f"\nWelcome, {name}!")
@@ -50,12 +47,13 @@ def main():
   print("We will flip a coin to see who goes first.")
   hort = ["Heads", "Tails"]
   coin_toss = input("Choose Heads or Tails: ")
+  coin_toss = coin_toss.capitalize()
   gofirst = rd.choice(hort)
   if gofirst == coin_toss:
-    print("\nYou have choosen wisely.")
+    print("\nYou have chosen wisely.")
     player_turn = True
   else:
-    print("\nYou have choosen poorly.")
+    print("\nYou have chosen poorly.")
     player_turn = False
 
   game = True
@@ -89,7 +87,7 @@ def main():
               break
             else:
               break
-        if move == 2:
+        elif move == 2:
           chance2 = rd.randint(1,100)
           if chance2 > 55:
             print("\nThe attack has missed")
@@ -107,7 +105,7 @@ def main():
               break
             else:
               break
-        if move == 3:
+        elif move == 3:
           chance3 = rd.randint(1,100)
           if chance3 > 70:
             print("\nUnable to heal")
@@ -120,7 +118,7 @@ def main():
             player_turn = False
             break
         else:
-          print("\nPlease pick a valid move")
+          print("\nPlease pick a valid move: either 1, 2, or 3")
 
       else:  
         time.sleep(2)
@@ -185,7 +183,7 @@ def main():
 
 def player_win():
   print("\nYou won!!!!")
-  again = input("\nWould you like to play again? ")
+  again = input("\nWould you like to play again (y/n)? ")
   if again == "y":
     main()
   else:
@@ -197,7 +195,7 @@ def player_lose():
   print("\nYou have been dealt the killing blow")
   time.sleep(2)
   print("\nBetter luck next time")
-  again = input("\nWould you like to play again? ")
+  again = input("\nWould you like to play again (y/n)? ")
   if again == "y":
     main()
   else:
@@ -205,7 +203,7 @@ def player_lose():
     time.sleep(2)
     sys.exit()
 
-
+intro()
 
 name = input("\nWhat is your name? ")
 
