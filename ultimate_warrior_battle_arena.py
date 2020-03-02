@@ -37,6 +37,7 @@ villain.health = 100
 player.damage = 0
 villain.damage = 0
 round_num.rnd = 1
+player.name = "dave"
 
 def power_two():
   print(f"\nYou won round {round_num.rnd}!!!")
@@ -163,6 +164,10 @@ def main():
               time.sleep(2)
               power_one()
         elif move == 3:
+          if player.health >= begin_player_health:
+            print("You are already at full health")
+            player_turn = True
+            break
           chance3 = rd.randint(1,100)
           if chance3 > 70:
             print("\nUnable to heal")
@@ -186,6 +191,8 @@ def main():
         
         if (villain.health < 35):
           move = rd.choice(crit_health_moves)
+        elif (villain.health >= begin_villain_health + 15):
+          move = rd.randint(1,2)
         else:
           move = rd.randint(1,3)
         if move == 1:
