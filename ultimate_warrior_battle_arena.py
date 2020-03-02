@@ -16,7 +16,6 @@ import sys
 
 villain_names = ['Task Rabbit', 'Omega', 'Patch Galactic', 'Misfit', 'Night Caller', 'Atomic', 'Patches', 'Voodoo', 'Aberation', 'Transonic', 'Nocturne', 'Overkill', 'Crossfire', 'Red Wolf', 'Dark Horse', 'Pyro', 'Slicer']
 
-
 def intro():
   print("\nWelcome to the Ultimate Warrior Battle Arena!\n")
   time.sleep(3.5)
@@ -39,11 +38,11 @@ def intro():
   print("Let's get down to business.\n")
   time.sleep(2)
   
-def main():
-  class player:
-  def __init__(self, health, damage):
+class player:
+  def __init__(self, health, damage, name):
     self.health = health
     self.damage = damage
+    self.name = name
 
 class villain:
   def __init__(self, health, damage):
@@ -55,7 +54,6 @@ villain.health = 100
 
 player.damage = 0
 villain.damage = 0
-
 
 def coin_toss():
   '''
@@ -74,7 +72,7 @@ def coin_toss():
 
 def main():
   opponent = rd.choice(villain_names)
-  print(f"\nWelcome to round 1, {name}!")
+  print(f"\nWelcome to round 1, {player.name}!")
   #time.sleep(2) 
   print(f"Your opponent today is {opponent}.\n")
   #time.sleep(4)
@@ -89,9 +87,9 @@ def main():
     while (player.health > 0 or villain.health > 0):
       while player_turn == True:
         #time.sleep(2)
-        print(f"\n{name}'s HP is {player.health}")
+        print(f"\n{player.name}'s HP is {player.health}")
         print(f"{opponent}'s HP is {villain.health}")
-        print(f"\nIt is {name}'s turn.")
+        print(f"\nIt is {player.name}'s turn.")
         move = int(input("Please pick either the Fiery Jab (1), the Preeminent Throat Punch (2), or Heal (3): "))
         if move == 1:
           chance_1 = rd.randint(1,100)
@@ -145,7 +143,7 @@ def main():
 
       else:  
         time.sleep(2)
-        print(f"\n{name}'s HP is {player.health}")
+        print(f"\n{player.name}'s HP is {player.health}")
         print(f"{opponent}'s HP is {villain.health}")
         print(f"\n{opponent} will decide his move.")
         time.sleep(2)
@@ -168,7 +166,7 @@ def main():
             player.health -= damage1
             print(f"\n{opponent} dealt {damage1}HP of damage")
             if (player.health <= 0):
-              print(f"\n{name}'s HP is 0!")
+              print(f"\n{player.name}'s HP is 0!")
               time.sleep(2)
               player_lose()
               break
@@ -186,7 +184,7 @@ def main():
             player.health -= damage2
             print(f"\n{opponent} dealt {damage2}HP of damage")
             if (player.health <= 0):
-              print(f"\n{name}'s HP is 0!")
+              print(f"\n{player.name}'s HP is 0!")
               time.sleep(2)
               player_lose()
               break
@@ -250,7 +248,7 @@ def power_one():
 def health_stage2():
   #just like main(), but you have increased health but opponent has increased damage by 30, hp by 25, and heal by 10 hp
   opponent = rd.choice(villain_names)
-  print(f"\nWelcome to stage 2, {name}!")
+  print(f"\nWelcome to stage 2, {player.name}!")
   time.sleep(2) 
   print(f"Your opponent for this round is {opponent}.\n")
   time.sleep(4)
@@ -275,9 +273,9 @@ def health_stage2():
     while (player_health > 0 or opp_health > 0):
       while player_turn:
         time.sleep(2)
-        print(f"\n{name}'s HP is {player_health}")
+        print(f"\n{player.name}'s HP is {player_health}")
         print(f"{opponent}'s HP is {opp_health}")
-        print(f"\nIt is {name}'s turn.")
+        print(f"\nIt is {player.name}'s turn.")
         move = int(input("Please pick either the Fiery Jab (1), the Preeminent Throat Punch (2), or Heal (3): "))
         if move == 1:
           chance1 = rd.randint(1,100)
@@ -332,7 +330,7 @@ def health_stage2():
 
       else:  
         time.sleep(2)
-        print(f"\n{name}'s HP is {player_health}")
+        print(f"\n{player.name}'s HP is {player_health}")
         print(f"{opponent}'s HP is {opp_health}")
         print(f"\n{opponent} will decide his move.")
         time.sleep(2)
@@ -355,7 +353,7 @@ def health_stage2():
             player_health -= damage1
             print(f"\n{opponent} dealt {damage1}HP of damage")
             if (player_health <= 0):
-              print(f"\n{name}'s HP is 0!")
+              print(f"\n{player.name}'s HP is 0!")
               time.sleep(2)
               player_lose()
               break
@@ -373,7 +371,7 @@ def health_stage2():
             player_health -= damage2
             print(f"\n{opponent} dealt {damage2}HP of damage")
             if (player_health <= 0):
-              print(f"\n{name}'s HP is 0!")
+              print(f"\n{player.name}'s HP is 0!")
               time.sleep(2)
               player_lose()
               break
@@ -393,7 +391,7 @@ def health_stage2():
 def attack_stage2():
   #just like main(), but increased player attack but opponent has 75 HP increase, attack by 15, and heal by 10 HP
   opponent = rd.choice(villain_names)
-  print(f"\nWelcome, {name}!")
+  print(f"\nWelcome, {player.name}!")
   time.sleep(2) 
   print(f"Your opponent today is {opponent}.\n")
   time.sleep(4)
@@ -418,9 +416,9 @@ def attack_stage2():
     while (player_health > 0 or opp_health > 0):
       while player_turn:
         time.sleep(2)
-        print(f"\n{name}'s HP is {player_health}")
+        print(f"\n{player.name}'s HP is {player_health}")
         print(f"{opponent}'s HP is {opp_health}")
-        print(f"\nIt is {name}'s turn.")
+        print(f"\nIt is {player.name}'s turn.")
         move = int(input("Please pick either the Fiery Jab (1), the Preeminent Throat Punch (2), or Heal (3): "))
         if move == 1:
           chance1 = rd.randint(1,100)
@@ -475,7 +473,7 @@ def attack_stage2():
 
       else:  
         time.sleep(2)
-        print(f"\n{name}'s HP is {player_health}")
+        print(f"\n{player.name}'s HP is {player_health}")
         print(f"{opponent}'s HP is {opp_health}")
         print(f"\n{opponent} will decide his move.")
         time.sleep(2)
@@ -498,7 +496,7 @@ def attack_stage2():
             player_health -= damage1
             print(f"\n{opponent} dealt {damage1}HP of damage")
             if (player_health <= 0):
-              print(f"\n{name}'s HP is 0!")
+              print(f"\n{player.name}'s HP is 0!")
               time.sleep(2)
               player_lose()
               break
@@ -516,7 +514,7 @@ def attack_stage2():
             player_health -= damage2
             print(f"\n{opponent} dealt {damage2}HP of damage")
             if (player_health <= 0):
-              print(f"\n{name}'s HP is 0!")
+              print(f"\n{player.name}'s HP is 0!")
               time.sleep(2)
               player_lose()
               break
@@ -553,7 +551,7 @@ def increase_health():
 
 def stage3():
   opponent = rd.choice(villain_names)
-  print(f"\nWelcome to round 3, {name}!")
+  print(f"\nWelcome to round 3, {player.name}!")
   time.sleep(2) 
   print(f"Your final opponent today is {opponent}.\n")
   time.sleep(4)
@@ -578,9 +576,9 @@ def stage3():
     while (player_health > 0 or opp_health > 0):
       while player_turn:
         time.sleep(2)
-        print(f"\n{name}'s HP is {player_health}")
+        print(f"\n{player.name}'s HP is {player_health}")
         print(f"{opponent}'s HP is {opp_health}")
-        print(f"\nIt is {name}'s turn.")
+        print(f"\nIt is {player.name}'s turn.")
         move = int(input("Please pick either the Fiery Jab (1), the Preeminent Throat Punch (2), or Heal (3): "))
         if move == 1:
           chance1 = rd.randint(1,100)
@@ -635,7 +633,7 @@ def stage3():
 
       else:  
         time.sleep(2)
-        print(f"\n{name}'s HP is {player_health}")
+        print(f"\n{player.name}'s HP is {player_health}")
         print(f"{opponent}'s HP is {opp_health}")
         print(f"\n{opponent} will decide his move.")
         time.sleep(2)
@@ -658,7 +656,7 @@ def stage3():
             player_health -= damage1
             print(f"\n{opponent} dealt {damage1}HP of damage")
             if (player_health <= 0):
-              print(f"\n{name}'s HP is 0!")
+              print(f"\n{player.name}'s HP is 0!")
               time.sleep(2)
               player_lose()
               break
@@ -676,7 +674,7 @@ def stage3():
             player_health -= damage2
             print(f"\n{opponent} dealt {damage2}HP of damage")
             if (player_health <= 0):
-              print(f"\n{name}'s HP is 0!")
+              print(f"\n{player.name}'s HP is 0!")
               time.sleep(2)
               player_lose()
               break
@@ -696,7 +694,7 @@ def stage3():
 
 intro()
 
-name = input("\nWhat is your name? ")
+player.name = input("\nWhat is your name? ")
 
 main()
 
