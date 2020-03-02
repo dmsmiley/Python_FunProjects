@@ -40,14 +40,29 @@ def intro():
   time.sleep(2)
   
 def main():
-  opponent = rd.choice(villain_names)
-  print(f"\nWelcome to round 1, {name}!")
-  time.sleep(2) 
-  print(f"Your opponent today is {opponent}.\n")
-  time.sleep(4)
-  print("We will flip a coin to see who goes first.")
+  class player:
+  def __init__(self, health, damage):
+    self.health = health
+    self.damage = damage
+
+class villain:
+  def __init__(self, health, damage):
+    self.health = health
+    self.damage = damage
+
+player.health = 100
+villain.health = 100
+
+player.damage = 0
+villain.damage = 0
+
+
+def coin_toss():
+  '''
+  This function is for the coin tosses before each battle.
+  '''
   hort = ["Heads", "Tails"]
-  coin_toss = input("Choose Heads or Tails: ")
+  coin_toss = input("Choose heads or tails by typing 'Heads' or 'Tails': ")
   coin_toss = coin_toss.capitalize()
   gofirst = rd.choice(hort)
   if gofirst == coin_toss:
@@ -57,37 +72,44 @@ def main():
     print("\nYou have chosen poorly.")
     player_turn = False
 
+def main():
+  opponent = rd.choice(villain_names)
+  print(f"\nWelcome to round 1, {name}!")
+  #time.sleep(2) 
+  print(f"Your opponent today is {opponent}.\n")
+  #time.sleep(4)
+  print("We will flip a coin to see who goes first.")
+  player_turn = None
+  coin_toss()
+
   game = True
 
   while game:
-    player_health = 100
-    opp_health = 100
 
-    while (player_health > 0 or opp_health > 0):
-      while player_turn:
-        time.sleep(2)
-        print(f"\n{name}'s HP is {player_health}")
-        print(f"{opponent}'s HP is {opp_health}")
+    while (player.health > 0 or villain.health > 0):
+      while player_turn == True:
+        #time.sleep(2)
+        print(f"\n{name}'s HP is {player.health}")
+        print(f"{opponent}'s HP is {villain.health}")
         print(f"\nIt is {name}'s turn.")
         move = int(input("Please pick either the Fiery Jab (1), the Preeminent Throat Punch (2), or Heal (3): "))
         if move == 1:
-          chance1 = rd.randint(1,100)
-          if chance1 > 80:
+          chance_1 = rd.randint(1,100)
+          if chance_1 > 80:
             print("\nThe attack has missed")
             player_turn = False
             break
           else:
             damage1 = rd.randint(10,25)
-            opp_health -= damage1
+            damage1 += player.damage
+            villain.health -= damage1
             print(f"\nYou dealt {damage1}HP of damage")
             player_turn = False
-            if (opp_health <= 0):
-              print(f"\n{opponent}'s HP is 0!")
-              time.sleep(2)
-              power_one()
-              break
-            else:
-              break
+            break
+        if (villain.health <= 0):
+          print(f"\n{opponent}'s HP is 0!")
+          time.sleep(2)
+          power_one()
         elif move == 2:
           chance2 = rd.randint(1,100)
           if chance2 > 55:
@@ -96,10 +118,10 @@ def main():
             break
           else:
             damage2 = rd.randint(30,50)
-            opp_health -= damage2
+            villain.health -= damage2
             print(f"\nYou dealt {damage2}HP of damage")
             player_turn = False
-            if (opp_health <= 0):
+            if (villain.health <= 0):
               print(f"\n{opponent}'s HP is 0!")
               time.sleep(2)
               power_one()
@@ -114,7 +136,7 @@ def main():
             break
           else:
             heal = rd.randint(25,40)
-            player_health += heal
+            player.health += heal
             print(f"\nYou were healed by {heal}HP")
             player_turn = False
             break
@@ -123,15 +145,15 @@ def main():
 
       else:  
         time.sleep(2)
-        print(f"\n{name}'s HP is {player_health}")
-        print(f"{opponent}'s HP is {opp_health}")
+        print(f"\n{name}'s HP is {player.health}")
+        print(f"{opponent}'s HP is {villain.health}")
         print(f"\n{opponent} will decide his move.")
         time.sleep(2)
         
         crit_health_moves = [1,2,3,3]
         
-        if (opp_health < 35):
-          move = rd.choice(crit_health_moves)
+        if (villain.health < 35):
+          move = rd.choice(crit.health_moves)
         else:
           move = rd.randint(1,3)
         if move == 1:
@@ -143,9 +165,9 @@ def main():
             player_turn = True
           else:
             damage1 = rd.randint(10,25)
-            player_health -= damage1
+            player.health -= damage1
             print(f"\n{opponent} dealt {damage1}HP of damage")
-            if (player_health <= 0):
+            if (player.health <= 0):
               print(f"\n{name}'s HP is 0!")
               time.sleep(2)
               player_lose()
@@ -161,9 +183,9 @@ def main():
             player_turn = True
           else:
             damage2 = rd.randint(30,50)
-            player_health -= damage2
+            player.health -= damage2
             print(f"\n{opponent} dealt {damage2}HP of damage")
-            if (player_health <= 0):
+            if (player.health <= 0):
               print(f"\n{name}'s HP is 0!")
               time.sleep(2)
               player_lose()
@@ -177,7 +199,7 @@ def main():
             player_turn = True
           else:
             heal = rd.randint(25,40)
-            opp_health += heal
+            villain.health += heal
             print(f"\n{opponent} healed by {heal}HP")
             player_turn = True
 
