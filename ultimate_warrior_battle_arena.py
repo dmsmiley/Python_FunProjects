@@ -8,6 +8,8 @@
 #once either reaches zero, the game should end
 #when computer's health reaches 35%, increase chance to cast heal
 #give each a name
+#END OF GAME IS STILL IN PROGRESS
+#CURRENT STATE OF GAME WILL GO ON FOREVER!
 
 import random as rd
 import time
