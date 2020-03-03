@@ -17,27 +17,21 @@ import sys
 villain_names = ['Task Rabbit', 'Omega', 'Patch Galactic', 'Misfit', 'Night Caller', 'Atomic', 'Patches', 'Voodoo', 'Aberation', 'Transonic', 'Nocturne', 'Overkill', 'Crossfire', 'Red Wolf', 'Dark Horse', 'Pyro', 'Slicer']
   
 class player:
-  def __init__(self, health, damage, name):
+  def __init__(self, health = 100, damage = 0, name = 'Dave'):
     self.health = health
     self.damage = damage
     self.name = name
 
 class villain:
-  def __init__(self, health, damage):
+  def __init__(self, health = 100, damage = 0, name):
     self.health = health
     self.damage = damage
+    self.name = name
 
 class round_num:
-  def __init__(self, rnd):
+  def __init__(self, rnd =1):
     self.rnd = rnd
 
-player.health = 100
-villain.health = 100
-
-player.damage = 0
-villain.damage = 0
-round_num.rnd = 1
-player.name = "dave"
 
 def power_two():
   print(f"\nYou won round {round_num.rnd}!!!")
