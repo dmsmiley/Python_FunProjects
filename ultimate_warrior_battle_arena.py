@@ -33,15 +33,20 @@ class Round:
 
 villain_names = ['Task Rabbit', 'Omega', 'Patch Galactic', 'Misfit', 'Night Caller', 'Atomic', 'Patches', 'Voodoo', 'Aberation', 'Transonic', 'Nocturne', 'Overkill', 'Crossfire', 'Red Wolf', 'Dark Horse', 'Pyro', 'Slicer']
 
+reset_names = ['Task Rabbit', 'Omega', 'Patch Galactic', 'Misfit', 'Night Caller', 'Atomic', 'Patches', 'Voodoo', 'Aberation', 'Transonic', 'Nocturne', 'Overkill', 'Crossfire', 'Red Wolf', 'Dark Horse', 'Pyro', 'Slicer']
+
 def fin():
   print('\nCongrats! You\'ve defeated the fiercest fighters in the galaxy!')
   again = input("\nWould you like to play again (y/n)? ")
   if again == "y":
-    Player.health = 100
-    Villain.health = 20
-    Villain.damage = 0
-    Player.damage = 0
+    #reset all class values to original state
+    Player.health, Player.damage = 100, 0
+    Villain.health, Villain.damage = 100, 0 
     Round.rnd = 1
+    #if there are too few villains for the next playthrough
+    #return back to original list without duplicates
+    if len(villain_names) <= 3:
+      villain_names.extend(x for x in reset_names if x not in villain_names)
     main()
   else:
     print("\nGoodbye!")
@@ -94,7 +99,6 @@ def coin_toss():
 def main():
   Villain.name = rd.choice(villain_names)
   villain_names.remove(Villain.name)
-  print(villain_names) #checking the name was removed
   print(f"\nWelcome to round {Round.rnd}, {Player.name}!")
   #time.sleep(2) 
   print(f"Your opponent today is {Villain.name}.\n")
@@ -174,7 +178,7 @@ def main():
         
         crit_health_moves = [1,2,3,3]
         
-        if (Villain.health < 35):
+        if (Villain.health < 35): 
           move = rd.choice(crit_health_moves)
         elif (Villain.health >= begin_villain_health):
           move = rd.randint(1,2)
@@ -271,10 +275,8 @@ def intro():
   time.sleep(2.5)
   print("Let's get down to business.\n")
   time.sleep(2)
-  Player.health = 100
-  Villain.health = 20
-  Villain.damage = 0
-  Player.damage = 0
+  Player.health, Player.damage = 100, 0
+  Villain.health, Villain.damage = 100, 0
   Player.name = input("What is your name? ")
   Round.rnd = 1
   main()
