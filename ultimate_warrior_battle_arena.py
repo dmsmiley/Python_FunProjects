@@ -7,7 +7,6 @@
 #after each move a message should pop up saying what happened and current health of the user and computer
 #once either reaches zero, the game should end
 #when computer's health reaches 35%, increase chance to cast heal
-#give each a name
 
 import random as rd
 import time
@@ -35,11 +34,8 @@ villain_names = ['Task Rabbit', 'Omega', 'Patch Galactic', 'Misfit', 'Night Call
 
 reset_names = ['Task Rabbit', 'Omega', 'Patch Galactic', 'Misfit', 'Night Caller', 'Atomic', 'Patches', 'Voodoo', 'Aberation', 'Transonic', 'Nocturne', 'Overkill', 'Crossfire', 'Red Wolf', 'Dark Horse', 'Pyro', 'Slicer']
 
-def fin():
-  print('\nCongrats! You\'ve defeated the fiercest fighters in the galaxy!')
-  again = input("\nWould you like to play again (y/n)? ")
-  if again == "y":
-    #reset all class values to original state
+def reset():
+  #reset all class values to original state
     Player.health, Player.damage = 100, 0
     Villain.health, Villain.damage = 100, 0 
     Round.rnd = 1
@@ -48,6 +44,12 @@ def fin():
     if len(villain_names) <= 3:
       villain_names.extend(x for x in reset_names if x not in villain_names)
     main()
+
+def fin():
+  print('\nCongrats! You\'ve defeated the fiercest fighters in the galaxy!')
+  again = input("\nWould you like to play again (y/n)? ")
+  if again == "y":
+    reset()
   else:
     print("\nGoodbye!")
     time.sleep(2)
@@ -82,9 +84,6 @@ def power_up():
       print("\nIncorrect input.\nPlease select a valid number.")
 
 def coin_toss():
-  '''
-  This function is for the coin tosses before each battle.
-  '''
   hort = ["Heads", "Tails"]
   coin_toss = input("Choose heads or tails by typing 'Heads' or 'Tails': ")
   coin_toss = coin_toss.capitalize()
@@ -121,40 +120,49 @@ def main():
         move = int(input("Please pick either the Fiery Jab (1), the Preeminent Throat Punch (2), or Heal (3): "))
         if move == 1:
           chance_1 = rd.randint(1,100)
+          print("\nYou threw a Fiery Jab!")
           if chance_1 > 80:
             print("\nThe attack has missed")
             player_turn = False
           else:
             damage1 = rd.randint(10,25)
             damage1 += Player.damage
+            dif = Villain.health
             Villain.health -= damage1
-            print(f"\nYou dealt {damage1}HP of damage")
-            player_turn = False
-            if (Villain.health <= 0):
+            if Villain.health <= 0:
+              print(f"\nYou dealt {dif}HP of damage")
               print(f"\n{Villain.name}'s HP is 0!")
               Player.health = begin_player_health
               Villain.health = begin_villain_health
               time.sleep(2)
               power_up()
+            else:
+              print(f"\nYou dealt {damage1}HP of damage")
+              player_turn = False
         elif move == 2:
           chance2 = rd.randint(1,100)
+          print('\nYou threw the Preeminent Throat Punch of Near Certain Death!')
           if chance2 > 55:
             print("\nThe attack has missed")
             player_turn = False
           else:
-            damage2 = rd.randint(30,50)
+            damage2 = rd.randint(10,25)
+            damage2 += Player.damage
+            dif2 = Villain.health
             Villain.health -= damage2
-            print(f"\nYou dealt {damage2}HP of damage")
-            player_turn = False
-            if (Villain.health <= 0):
+            if Villain.health <= 0:
+              print(f"\nYou dealt {dif2}HP of damage")
               print(f"\n{Villain.name}'s HP is 0!")
               Player.health = begin_player_health
               Villain.health = begin_villain_health
               time.sleep(2)
               power_up()
+            else:
+              print(f"\nYou dealt {damage2}HP of damage")
+              player_turn = False
         elif move == 3:
           if Player.health >= begin_player_health:
-            print("You are already at full health")
+            print("\nYou are already at full health")
             player_turn = True
             break
           chance3 = rd.randint(1,100)
@@ -164,8 +172,13 @@ def main():
           else:
             heal = rd.randint(25,40)
             Player.health += heal
-            print(f"\nYou were healed by {heal}HP")
-            player_turn = False
+            if (Player.health > begin_player_health):
+              Player.health = begin_player_health
+              print(f'\nYou were healed to max HP')
+              player_turn = False
+            else:      
+              print(f"\nYou were healed by {heal}HP")
+              player_turn = False
         else:
           print("\nPlease pick a valid move: either 1, 2, or 3")
 
@@ -178,7 +191,7 @@ def main():
         
         crit_health_moves = [1,2,3,3]
         
-        if (Villain.health < 35): 
+        if (Villain.health < 35):
           move = rd.choice(crit_health_moves)
         elif (Villain.health >= begin_villain_health):
           move = rd.randint(1,2)
@@ -193,14 +206,17 @@ def main():
             player_turn = True
           else:
             damage1 = rd.randint(10,25)
+            damage1 += Villain.damage
+            dif = Player.health
             Player.health -= damage1
-            print(f"\n{Villain.name} dealt {damage1}HP of damage")
-            if (Player.health <= 0):
+            if Player.health <= 0:
+              print(f"\n{Villain.name} dealt {dif}HP of damage")
               print(f"\n{Player.name}'s HP is 0!")
               time.sleep(2)
               player_lose()
               break
             else:
+              print(f"\n{Villain.name} dealt {damage1}HP of damage")
               player_turn = True
         if move == 2:
           print(f"\n{Villain.name} has thrown the Preeminent Throat Punch of Near Certain Death!")
@@ -210,15 +226,18 @@ def main():
             print("\nThe attack has missed")
             player_turn = True
           else:
-            damage2 = rd.randint(30,50)
+            damage2 = rd.randint(10,25)
+            damage2 += Villain.damage
+            dif2 = Player.health
             Player.health -= damage2
-            print(f"\n{Villain.name} dealt {damage2}HP of damage")
-            if (Player.health <= 0):
+            if Player.health <= 0:
+              print(f"\n{Villain.name} dealt {dif2}HP of damage")
               print(f"\n{Player.name}'s HP is 0!")
               time.sleep(2)
               player_lose()
               break
             else:
+              print(f"\n{Villain.name} dealt {damage2}HP of damage")
               player_turn = True
         if move == 3:
           chance3 = rd.randint(1,100)
@@ -228,8 +247,13 @@ def main():
           else:
             heal = rd.randint(25,40)
             Villain.health += heal
-            print(f"\n{Villain.name} healed by {heal}HP")
-            player_turn = True
+            if (Villain.health > begin_villain_health):
+              Villain.health = begin_villain_health
+              print(f'\n{Villain.name} was healed to max HP')
+              player_turn = True
+            else:      
+              print(f"\n{Villain.name} was healed by {heal}HP")
+              player_turn = True
 
 def player_win():
   print("\nYou won!!!!")
@@ -248,7 +272,7 @@ def player_lose():
   print("\nBetter luck next time")
   again = input("\nWould you like to play again (y/n)? ")
   if again == "y":
-    main()
+    reset()
   else:
     print("\nThanks for playing!")
     time.sleep(2)
